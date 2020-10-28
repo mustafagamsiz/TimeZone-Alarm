@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_city_time">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="org.gamsiz.gcalendar.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_city_time"
+        android:name="org.gamsiz.gcalendar.ui.citytime.CityTimeFragment"
+        android:label="@string/title_city_time"
+        tools:layout="@layout/fragment_city_time" >
+        <action
+            android:id="@+id/action_navigation_city_time_to_navigation_search_city_time"
+            app:destination="@id/navigation_search_city_time"
+            app:popUpTo="@id/navigation_city_time"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +28,9 @@
         android:name="org.gamsiz.gcalendar.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_search_city_time"
+        android:name="org.gamsiz.gcalendar.ui.citytime.SearchCityTimeFragment"
+        android:label="search_city_time_fragment"
+        tools:layout="@layout/fragment_search_city_time" />
 </navigation>

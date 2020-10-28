@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="searchQuery"
+            type="org.gamsiz.gcalendar.ui.citytime.CitySearch" />
+
+        <variable
+            name="searchCityTimeViewModel"
+            type="org.gamsiz.gcalendar.ui.citytime.SearchCityTimeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.citytime.SearchCityTimeFragment">
+
+        <EditText
+            android:id="@+id/city_search_view"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:inputType="text"
+            android:text="@={searchQuery.query}"
+            app:layout_constraintEnd_toStartOf="@id/search_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Search"
+            android:onClick="@{() -> searchCityTimeViewModel.onSearchCity(searchQuery)}"
+            app:layout_constraintStart_toEndOf="@id/city_search_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:enabled="@{searchQuery.hasResult}"
+            android:onClick="@{() -> searchCityTimeViewModel.onCreateCity(searchQuery.queryResult)}"
+            android:text="@string/search_city_save_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:onClick="@{() -> searchCityTimeViewModel.onFinished()}"
+            android:text="@string/search_city_cancel_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/save_button" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
