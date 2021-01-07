@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.gamsiz.gcalendar.R
 import org.gamsiz.gcalendar.data.GCalendarDatabase
 import org.gamsiz.gcalendar.databinding.FragmentSearchCityTimeBinding
@@ -40,21 +41,27 @@ class SearchCityTimeFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        binding.citySearchView.setOnEditorActionListener(
-            object : TextView.OnEditorActionListener {
-                override fun onEditorAction(
-                    v: TextView,
-                    actionId: Int,
-                    event: KeyEvent
-                ): Boolean {
-                    if (KeyEvent.KEYCODE_ENTER == event.keyCode) {
-                        //searchCityTimeViewModel.onSearchCity(v.text.toString())
-                        return true
-                    }
-                    return false
+        // Creates a vertical Layout Manager
+        binding.citySearchResults.layoutManager = LinearLayoutManager(application)
+
+        val cityTimeAdapter = CityTimeAdapter(
+            CityTimeAdapter.CityTimeListener(
+                openListener = { cityTime ->
+                    searchCityTimeViewModel.onCreateCity(cityTime)
+                }
+            )
+        )
+
+        binding.citySearchResults.adapter = cityTimeAdapter
+
+        searchCityTimeViewModel.searchedEvent.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) {
+                    cityTimeAdapter.addHeaderAndSubmitList(binding.searchQuery!!.getQueryResult())
+                    searchCityTimeViewModel.doneSearched()
                 }
             }
-        )
+        })
 
         searchCityTimeViewModel.finishedEvent.observe(viewLifecycleOwner, Observer {
             it?.let {

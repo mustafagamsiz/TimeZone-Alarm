@@ -11,7 +11,7 @@ class CitySearch () : BaseObservable() {
 
     private var hasResult: Boolean = false
 
-    private var queryResult: CityTime? = null
+    private var queryResult: List<CityTime>? = null
 
     @Bindable
     fun getQuery(): String {
@@ -43,11 +43,11 @@ class CitySearch () : BaseObservable() {
         }
     }
 
-    fun getQueryResult(): CityTime? {
+    fun getQueryResult(): List<CityTime>? {
         return queryResult
     }
 
-    fun setQueryResult(value: CityTime?) {
+    fun setQueryResult(value: List<CityTime>?) {
         // Avoids infinite loops.
         if (queryResult != value) {
             queryResult = value
